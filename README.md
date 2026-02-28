@@ -34,8 +34,11 @@ All votes are stored **on-chain** with **real-time updates** and transaction sta
 
 ![Transaction Success](tx-success.png.png)
 
-###Transaction hash of a contract call (verifiable on Stellar Explorer)
-![Transaction hash of a contract call](Stellar Explorer contract.png)
+### Transaction hash of a contract call (verifiable on Stellar Explorer)
+
+[View Transaction on Stellar Explorer](https://stellar.expert/explorer/testnet/tx/61cf6539b19e3d7a3cf9d92873bea7a4a9828e27dab2ea798522af4e6925c370)
+
+![Transaction hash](stellar-explorer-contract.png)
 
 
 ---
