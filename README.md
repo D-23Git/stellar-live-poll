@@ -34,6 +34,10 @@ All votes are stored **on-chain** with **real-time updates** and transaction sta
 
 ![Transaction Success](tx-success.png.png)
 
+###Transaction hash of a contract call (verifiable on Stellar Explorer)
+![Transaction hash of a contract call](Stellar Explorer contract.png)
+
+
 ---
 
 ## 🥋 Yellow Belt – Level 2 Requirements
