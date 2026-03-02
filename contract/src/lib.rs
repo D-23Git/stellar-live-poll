@@ -49,3 +49,75 @@ impl PollContract {
         env.storage().instance().get(&DataKey::Question).unwrap()
     }
 }
+
+// ✅ TESTS - Level 3 requirement (3+ tests passing)
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use soroban_sdk::{testutils::Address as _, Address, Env, String};
+
+    fn setup() -> (Env, PollContractClient<'static>, Address) {
+        let env = Env::default();
+        env.mock_all_auths();
+        let contract_id = env.register(PollContract, ());
+        let client = PollContractClient::new(&env, &contract_id);
+        let q = String::from_str(&env, "Which blockchain is best for payments?");
+        client.init(&q);
+        let voter = Address::generate(&env);
+        (env, client, voter)
+    }
+
+    // TEST 1: Init kela tar votes zero astat
+    #[test]
+    fn test_init_zero_votes() {
+        let (_env, client, _voter) = setup();
+        assert_eq!(client.total_votes(), 0);
+        assert_eq!(client.get_votes(&0), 0);
+        assert_eq!(client.get_votes(&1), 0);
+        assert_eq!(client.get_votes(&2), 0);
+        assert_eq!(client.get_votes(&3), 0);
+    }
+
+    // TEST 2: Vote kela tar count vadhato
+    #[test]
+    fn test_vote_increments() {
+        let (_env, client, voter) = setup();
+        client.vote(&voter, &0);
+        client.vote(&voter, &0);
+        client.vote(&voter, &1);
+        assert_eq!(client.get_votes(&0), 2);
+        assert_eq!(client.get_votes(&1), 1);
+        assert_eq!(client.get_votes(&2), 0);
+    }
+
+    // TEST 3: Total votes barobar astat
+    #[test]
+    fn test_total_votes_correct() {
+        let (_env, client, voter) = setup();
+        client.vote(&voter, &0);
+        client.vote(&voter, &1);
+        client.vote(&voter, &2);
+        client.vote(&voter, &3);
+        assert_eq!(client.total_votes(), 4);
+    }
+
+    // TEST 4: Ekach option var anekda vote karta yeto
+    #[test]
+    fn test_multiple_votes_same_option() {
+        let (_env, client, voter) = setup();
+        client.vote(&voter, &2);
+        client.vote(&voter, &2);
+        client.vote(&voter, &2);
+        assert_eq!(client.get_votes(&2), 3);
+        assert_eq!(client.total_votes(), 3);
+    }
+
+    // TEST 5: Question barobar save hote
+    #[test]
+    fn test_get_question() {
+        let (env, client, _voter) = setup();
+        let q = client.get_question();
+        let expected = String::from_str(&env, "Which blockchain is best for payments?");
+        assert_eq!(q, expected);
+    }
+}
