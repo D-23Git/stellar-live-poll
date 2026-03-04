@@ -4,6 +4,9 @@ import { Server } from "@stellar/stellar-sdk/rpc";
 export const CONTRACT_ID =
   "CABXIUP6FTYYHZKD7ZCASSMFKKUSXYNCPVKRBNCIXPUEPQ5C3ZWGZYTV";
 
+export const REWARD_CONTRACT_ID =
+  "CDO6NXBA2BLY46GRXYZE7RTQJ2Q4HNUJLPJHJWVWLY6GLZ7UZNCTTJDS";
+
 export const NETWORK_PASSPHRASE = StellarSdk.Networks.TESTNET;
 export const RPC_URL = "https://soroban-testnet.stellar.org";
 
@@ -56,7 +59,6 @@ export async function getBalance(publicKey) {
 }
 
 // ================= SUBMIT VOTE =================
-// ================= SUBMIT VOTE =================
 export async function submitVote(option, publicKey, signTransaction) {
   if (!publicKey || !signTransaction)
     throw new Error("Wallet not connected");
@@ -67,7 +69,7 @@ export async function submitVote(option, publicKey, signTransaction) {
   const voter = StellarSdk.Address.fromString(publicKey);
 
   const tx = new StellarSdk.TransactionBuilder(account, {
-    fee: "1000000", // ← raise fee to 1 XLM max (Soroban needs this)
+    fee: "1000000",
     networkPassphrase: NETWORK_PASSPHRASE,
   })
     .addOperation(
@@ -87,17 +89,14 @@ export async function submitVote(option, publicKey, signTransaction) {
     throw new Error("Simulation failed: " + JSON.stringify(sim.error));
   }
 
-  // ✅ CRITICAL: prepare the transaction with sim results (sets auth + fee)
   const preparedTx = StellarSdk.rpc.assembleTransaction(tx, sim).build();
 
-  // Freighter sign — pass XDR string
   const signedXdr = await signTransaction(preparedTx.toXDR(), {
     networkPassphrase: NETWORK_PASSPHRASE,
   });
 
-  // Handle both string and object responses from Freighter
-  const xdrString = typeof signedXdr === "string" 
-    ? signedXdr 
+  const xdrString = typeof signedXdr === "string"
+    ? signedXdr
     : signedXdr.signedTxXdr ?? signedXdr;
 
   const signedTx = StellarSdk.TransactionBuilder.fromXDR(
@@ -105,13 +104,11 @@ export async function submitVote(option, publicKey, signTransaction) {
     NETWORK_PASSPHRASE
   );
 
-  // send
   const send = await rpc.sendTransaction(signedTx);
   console.log("SEND RESULT:", send);
 
   if (send.status === "ERROR") {
     console.error("SEND ERROR:", send);
-    // Decode errorResult for better debugging
     throw new Error("Transaction failed. Status: " + send.status);
   }
 
@@ -121,6 +118,57 @@ export async function submitVote(option, publicKey, signTransaction) {
   };
 }
 
+// ================= GIVE REWARD =================
+export async function giveReward(publicKey, signTransaction) {
+  if (!publicKey || !signTransaction)
+    throw new Error("Wallet not connected");
+
+  const contract = new StellarSdk.Contract(REWARD_CONTRACT_ID);
+  const account = await rpc.getAccount(publicKey);
+  const voter = StellarSdk.Address.fromString(publicKey);
+
+  const tx = new StellarSdk.TransactionBuilder(account, {
+    fee: "1000000",
+    networkPassphrase: NETWORK_PASSPHRASE,
+  })
+    .addOperation(
+      contract.call("give_reward", voter.toScVal())
+    )
+    .setTimeout(30)
+    .build();
+
+  const sim = await rpc.simulateTransaction(tx);
+  if (sim.error) {
+    console.error("REWARD SIM ERROR:", sim);
+    throw new Error("Reward simulation failed");
+  }
+
+  const preparedTx = StellarSdk.rpc.assembleTransaction(tx, sim).build();
+
+  const signedXdr = await signTransaction(preparedTx.toXDR(), {
+    networkPassphrase: NETWORK_PASSPHRASE,
+  });
+
+  const xdrString = typeof signedXdr === "string"
+    ? signedXdr
+    : signedXdr.signedTxXdr ?? signedXdr;
+
+  const signedTx = StellarSdk.TransactionBuilder.fromXDR(
+    xdrString,
+    NETWORK_PASSPHRASE
+  );
+
+  const send = await rpc.sendTransaction(signedTx);
+
+  if (send.status === "ERROR") {
+    throw new Error("Reward transaction failed");
+  }
+
+  return {
+    hash: send.hash,
+    status: send.status,
+  };
+}
 
 // ================= WAIT =================
 export async function waitForTransaction(hash) {
