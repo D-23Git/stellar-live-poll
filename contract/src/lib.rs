@@ -50,7 +50,6 @@ impl PollContract {
     }
 }
 
-// ✅ TESTS - Level 3 requirement (3+ tests passing)
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -59,7 +58,7 @@ mod tests {
     fn setup() -> (Env, PollContractClient<'static>, Address) {
         let env = Env::default();
         env.mock_all_auths();
-        let contract_id = env.register(PollContract, ());
+        let contract_id = env.register_contract(None, PollContract);
         let client = PollContractClient::new(&env, &contract_id);
         let q = String::from_str(&env, "Which blockchain is best for payments?");
         client.init(&q);
@@ -67,7 +66,6 @@ mod tests {
         (env, client, voter)
     }
 
-    // TEST 1: Init kela tar votes zero astat
     #[test]
     fn test_init_zero_votes() {
         let (_env, client, _voter) = setup();
@@ -78,7 +76,6 @@ mod tests {
         assert_eq!(client.get_votes(&3), 0);
     }
 
-    // TEST 2: Vote kela tar count vadhato
     #[test]
     fn test_vote_increments() {
         let (_env, client, voter) = setup();
@@ -90,7 +87,6 @@ mod tests {
         assert_eq!(client.get_votes(&2), 0);
     }
 
-    // TEST 3: Total votes barobar astat
     #[test]
     fn test_total_votes_correct() {
         let (_env, client, voter) = setup();
@@ -101,7 +97,6 @@ mod tests {
         assert_eq!(client.total_votes(), 4);
     }
 
-    // TEST 4: Ekach option var anekda vote karta yeto
     #[test]
     fn test_multiple_votes_same_option() {
         let (_env, client, voter) = setup();
@@ -112,7 +107,6 @@ mod tests {
         assert_eq!(client.total_votes(), 3);
     }
 
-    // TEST 5: Question barobar save hote
     #[test]
     fn test_get_question() {
         let (env, client, _voter) = setup();
