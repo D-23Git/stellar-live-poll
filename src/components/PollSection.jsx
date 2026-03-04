@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getVotes, submitVote, waitForTransaction, CONTRACT_ID } from "../blockchain/contract";
+import { getVotes, submitVote, waitForTransaction, CONTRACT_ID, giveReward } from "../blockchain/contract";
 
 const OPTIONS = [
   { id: 0, name: "Stellar",  short: "STR", color: "#6366f1" },
@@ -8,7 +8,6 @@ const OPTIONS = [
   { id: 3, name: "Cardano",  short: "ADA", color: "#10b981" },
 ];
 
-// Animated counter hook
 function useAnimatedCount(target) {
   const [display, setDisplay] = useState(0);
   const prev = useRef(0);
@@ -28,7 +27,6 @@ function useAnimatedCount(target) {
   return display;
 }
 
-// Confetti component
 function Confetti() {
   const pieces = Array.from({ length: 32 }, (_, i) => i);
   const colors = ["#6366f1", "#06b6d4", "#f59e0b", "#10b981", "#f472b6", "#a78bfa"];
@@ -53,7 +51,6 @@ function Confetti() {
   );
 }
 
-// Donut chart
 function DonutChart({ votes, total }) {
   const size = 120;
   const r = 45;
@@ -111,13 +108,20 @@ function Spinner() {
   return <span className="spinner" />;
 }
 
-function SuccessBurst({ option }) {
+function SuccessBurst({ option, rewardEarned }) {
   return (
     <div className="burst-overlay">
       <Confetti />
-      <div className="burst-icon">OK</div>
+      <div className="burst-icon">🎉</div>
       <div className="burst-text">Vote Confirmed!</div>
-      <div className="burst-sub">{"Voted for " + (option || "") + " on Stellar Testnet"}</div>
+      <div className="burst-sub">
+        {"Voted for " + (option || "") + " on Stellar Testnet"}
+      </div>
+      {rewardEarned && (
+        <div className="burst-sub" style={{ color: "#f59e0b", marginTop: "6px", fontWeight: "700" }}>
+          🏆 Reward Earned!
+        </div>
+      )}
     </div>
   );
 }
@@ -129,6 +133,7 @@ export default function PollSection({ connectedWallet, setError, setSuccess, set
   const [voted, setVoted]                 = useState(false);
   const [votedOption, setVotedOption]     = useState(null);
   const [showBurst, setShowBurst]         = useState(false);
+  const [rewardEarned, setRewardEarned]   = useState(false);
   const [lastRefresh, setLastRefresh]     = useState(null);
   const [isRefreshing, setIsRefreshing]   = useState(false);
   const [txHistory, setTxHistory]         = useState([]);
@@ -181,9 +186,19 @@ export default function PollSection({ connectedWallet, setError, setSuccess, set
         setTxStatus("success");
         setVoted(true);
         setVotedOption(option.id);
+        setSuccess("Vote confirmed on Stellar! Claiming reward...");
+
+        // ✅ INTER-CONTRACT CALL — PollReward contract
+        try {
+          await giveReward(connectedWallet.address, connectedWallet.signTransaction);
+          setRewardEarned(true);
+          setSuccess("Vote confirmed + Reward earned! 🏆");
+        } catch (e) {
+          setSuccess("Vote confirmed on Stellar!");
+        }
+
         setShowBurst(true);
         setTimeout(() => setShowBurst(false), 3500);
-        setSuccess("Vote confirmed on Stellar!");
         setTxHistory((prev) => [
           { hash: response.hash, option: option.name, time: new Date().toLocaleTimeString() },
           ...prev.slice(0, 4)
@@ -247,7 +262,7 @@ export default function PollSection({ connectedWallet, setError, setSuccess, set
   return (
     <div className="poll-card" style={{ position: "relative" }}>
 
-      {showBurst && <SuccessBurst option={votedOption !== null ? OPTIONS[votedOption].name : ""} />}
+      {showBurst && <SuccessBurst option={votedOption !== null ? OPTIONS[votedOption].name : ""} rewardEarned={rewardEarned} />}
 
       <div className="poll-header">
         <div>
@@ -309,7 +324,8 @@ export default function PollSection({ connectedWallet, setError, setSuccess, set
                 </span>
                 <span className="option-name">{opt.name}</span>
                 {isLeader && totalVotes > 0 && <span className="leader-crown">👑</span>}
-                {isMyVote && <span className="my-vote-badge">Your Vote</span>}
+                {isMyVote && <span className="my-vote-badge">Your Vote ✅</span>}
+                {isMyVote && rewardEarned && <span className="my-vote-badge" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b", borderColor: "rgba(245,158,11,0.3)" }}>🏆 Rewarded</span>}
               </div>
               <span className="option-pct" style={{ color: opt.color }}>{pct + "%"}</span>
             </div>
@@ -346,7 +362,6 @@ export default function PollSection({ connectedWallet, setError, setSuccess, set
           <div className="tx-history-title">Recent Transactions</div>
           {txHistory.map((tx, i) => {
             const url = "https://stellar.expert/explorer/testnet/tx/" + tx.hash;
-            const shortHash = tx.hash.slice(0, 8) + "...";
             return (
               <div key={i} className="tx-history-row">
                 <span className="tx-history-opt">{"Voted " + tx.option}</span>
@@ -364,7 +379,7 @@ export default function PollSection({ connectedWallet, setError, setSuccess, set
       )}
 
       <div className="contract-ref">
-        {"Contract: " + CONTRACT_ID.slice(0, 8) + "..." + CONTRACT_ID.slice(-8)}
+        {"Poll: " + CONTRACT_ID.slice(0, 8) + "..." + CONTRACT_ID.slice(-8) + " | Reward: CDO6NXBA...TTJDS"}
       </div>
 
     </div>
