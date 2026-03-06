@@ -19,8 +19,12 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
-      - name: Run contract tests
+      - name: Run poll contract tests
         working-directory: ./contract
+        run: cargo test
+
+      - name: Run reward contract tests
+        working-directory: ./reward-contract
         run: cargo test
 
   build-frontend:
