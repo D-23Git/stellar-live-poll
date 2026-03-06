@@ -15,10 +15,15 @@ export default function WalletSection({
   const [wallets, setWallets]     = useState([]);
 
   useEffect(() => {
-    if (showModal) getInstalledWallets().then(setWallets);
+    if (showModal) {
+      // Wait 300ms for wallet extensions to be detected
+      setTimeout(() => {
+        getInstalledWallets().then(setWallets);
+      }, 300);
+    }
   }, [showModal]);
 
-  // ✅ Balance fetch after connect
+  // Balance fetch after connect
   useEffect(() => {
     if (connectedWallet?.address) {
       getBalance(connectedWallet.address)
@@ -33,7 +38,7 @@ export default function WalletSection({
     setSuccess("");
 
     if (!wallet.installed) {
-      setError(`❌ ${wallet.name} is not installed.`);
+      setError(`${wallet.name} is not installed.`);
       setLoadingId(null);
       return;
     }
@@ -42,13 +47,13 @@ export default function WalletSection({
 
     if (result.success) {
       setConnectedWallet(result);
-      setSuccess(`✅ ${result.walletName} connected!`);
+      setSuccess(`${result.walletName} connected!`);
       setShowModal(false);
     } else {
       const errMap = {
-        WALLET_NOT_FOUND: `❌ ${wallet.name} not found.`,
-        ACCESS_DENIED:    "🚫 Connection rejected.",
-        UNKNOWN_WALLET:   "⚠️ Unknown wallet.",
+        WALLET_NOT_FOUND: `${wallet.name} not found.`,
+        ACCESS_DENIED:    "Connection rejected.",
+        UNKNOWN_WALLET:   "Unknown wallet.",
       };
       setError(errMap[result.error] || `Error: ${result.error}`);
     }
@@ -67,11 +72,11 @@ export default function WalletSection({
         {connectedWallet ? (
           <div className="connected-badge">
             <span>
-              {connectedWallet.walletIcon} {connectedWallet.walletName} ·{" "}
+              {connectedWallet.walletIcon} {connectedWallet.walletName} &middot;{" "}
               {connectedWallet.address.slice(0, 6)}...
               {connectedWallet.address.slice(-6)}
               {balance !== null && (
-                <span className="balance-tag"> · {balance} XLM</span>
+                <span className="balance-tag"> &middot; {balance} XLM</span>
               )}
             </span>
             <button className="disconnect-btn" onClick={handleDisconnect}>
@@ -101,8 +106,8 @@ export default function WalletSection({
                 <span className="wallet-name">{wallet.icon} {wallet.name}</span>
                 <span className="wallet-action">
                   {loadingId === wallet.id
-                    ? "⏳ Connecting..."
-                    : wallet.installed ? "Connect →" : "Install ↗"}
+                    ? "Connecting..."
+                    : wallet.installed ? "Connect" : "Install"}
                 </span>
               </button>
             ))}
