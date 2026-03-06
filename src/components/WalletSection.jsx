@@ -16,14 +16,12 @@ export default function WalletSection({
 
   useEffect(() => {
     if (showModal) {
-      // Wait 300ms for wallet extensions to be detected
       setTimeout(() => {
         getInstalledWallets().then(setWallets);
-      }, 300);
+      }, 800);
     }
   }, [showModal]);
 
-  // Balance fetch after connect
   useEffect(() => {
     if (connectedWallet?.address) {
       getBalance(connectedWallet.address)
@@ -37,12 +35,8 @@ export default function WalletSection({
     setError("");
     setSuccess("");
 
-    if (!wallet.installed) {
-      setError(`${wallet.name} is not installed.`);
-      setLoadingId(null);
-      return;
-    }
-
+    // Always try to connect — even if "not installed" shows
+    // because wallet detection can be unreliable
     const result = await connectWallet(wallet.id);
 
     if (result.success) {
@@ -50,12 +44,17 @@ export default function WalletSection({
       setSuccess(`${result.walletName} connected!`);
       setShowModal(false);
     } else {
-      const errMap = {
-        WALLET_NOT_FOUND: `${wallet.name} not found.`,
-        ACCESS_DENIED:    "Connection rejected.",
-        UNKNOWN_WALLET:   "Unknown wallet.",
-      };
-      setError(errMap[result.error] || `Error: ${result.error}`);
+      // Only show install error if connect also failed
+      if (!wallet.installed) {
+        setError(`${wallet.name} is not installed. Please install and refresh.`);
+      } else {
+        const errMap = {
+          WALLET_NOT_FOUND: `${wallet.name} not found. Please refresh page.`,
+          ACCESS_DENIED:    "Connection rejected.",
+          UNKNOWN_WALLET:   "Unknown wallet.",
+        };
+        setError(errMap[result.error] || `Error: ${result.error}`);
+      }
     }
     setLoadingId(null);
   };
@@ -96,6 +95,12 @@ export default function WalletSection({
             <h3>Choose a Wallet</h3>
             <p className="modal-subtitle">Connect your Stellar wallet to vote</p>
 
+            {wallets.length === 0 && (
+              <p style={{ color: "#64748b", textAlign: "center", padding: "16px" }}>
+                Loading wallets...
+              </p>
+            )}
+
             {wallets.map((wallet) => (
               <button
                 key={wallet.id}
@@ -107,7 +112,7 @@ export default function WalletSection({
                 <span className="wallet-action">
                   {loadingId === wallet.id
                     ? "Connecting..."
-                    : wallet.installed ? "Connect" : "Install"}
+                    : wallet.installed ? "Connect →" : "Install ↗"}
                 </span>
               </button>
             ))}
