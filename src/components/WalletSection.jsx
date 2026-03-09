@@ -16,9 +16,11 @@ export default function WalletSection({
 
   useEffect(() => {
     if (showModal) {
+      // Show instantly, then re-check after 500ms for async detection
+      setWallets(getInstalledWallets());
       setTimeout(() => {
-        getInstalledWallets().then(setWallets);
-      }, 800);
+        setWallets(getInstalledWallets());
+      }, 500);
     }
   }, [showModal]);
 
@@ -35,8 +37,6 @@ export default function WalletSection({
     setError("");
     setSuccess("");
 
-    // Always try to connect — even if "not installed" shows
-    // because wallet detection can be unreliable
     const result = await connectWallet(wallet.id);
 
     if (result.success) {
@@ -44,9 +44,8 @@ export default function WalletSection({
       setSuccess(`${result.walletName} connected!`);
       setShowModal(false);
     } else {
-      // Only show install error if connect also failed
       if (!wallet.installed) {
-        setError(`${wallet.name} is not installed. Please install and refresh.`);
+        setError(`${wallet.name} is not installed. Please install and refresh page.`);
       } else {
         const errMap = {
           WALLET_NOT_FOUND: `${wallet.name} not found. Please refresh page.`,
@@ -94,12 +93,6 @@ export default function WalletSection({
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <h3>Choose a Wallet</h3>
             <p className="modal-subtitle">Connect your Stellar wallet to vote</p>
-
-            {wallets.length === 0 && (
-              <p style={{ color: "#64748b", textAlign: "center", padding: "16px" }}>
-                Loading wallets...
-              </p>
-            )}
 
             {wallets.map((wallet) => (
               <button
