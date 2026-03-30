@@ -1,208 +1,292 @@
-# 🌟 StarChain Reviews - Level 5
+# 🗳️ Stellar Live Poll
 
-![StarChain Home Dashboard](./assets/businesses/sharma.png)
-
-Welcome to **StarChain Reviews**, a fully decentralized digital trust and reputation platform built on the **Stellar Soroban** blockchain. This project eliminates the fake review industry by cryptographically verifying all commercial feedback on-chain.
+> Real-time on-chain voting DApp built on Stellar Soroban Smart Contracts
 
 ---
 
-## ✅ Submission Checklist & Requirements
-Ensure your project meets all Level 5 requirements:
-*   [x] **Public GitHub repository** - [https://github.com/D-23Git/StarChain](https://github.com/D-23Git/StarChain)
-*   [x] **README with complete documentation** ✅
-*   [x] **Architecture document included** - [ARCHITECTURE.md](./ARCHITECTURE.md)
-*   [x] **Minimum 10+ meaningful commits** ✅
-*   [x] **Live demo link** - [starchain-fixed.vercel.app](https://starchain-fixed.vercel.app/)
-*   [x] **Demo video link** - [Watch the MVP Demo Recording](https://www.loom.com/share/763e1cc37e094c9a946b32d457882781) 👈
-*   [x] **List of 5+ user wallet addresses** ✅ (verified below)
-*   [x] **User feedback documentation** ✅ (5 users onboarded)
+## 🌐 Live Demo
+👉 **[https://stellar-live-poll-dapp-phi.vercel.app/](https://stellar-live-poll-dapp-phi.vercel.app/)**
 
 ---
 
-## 🔗 Important Links
-*   **Live Demo UI**: [https://starchain-fixed.vercel.app](https://starchain-fixed.vercel.app/)
-*   **GitHub Repository**: [https://github.com/D-23Git/StarChain](https://github.com/D-23Git/StarChain)
-*   **Architecture Document**: [ARCHITECTURE.md](./ARCHITECTURE.md)
-*   **User Feedback Form**: [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSe9ZonncPvng8-KcDP_nLv5fLXx5R3nTSFXG7F0wymJMpYyiA/viewform?usp=publish-editor)
-*   **Collected User Responses**: [Google Sheet](https://docs.google.com/spreadsheets/d/1M7MpJttnzaU8tJJ5diGtT9nnqieeQzlkkgOKn_tpHxk/edit?usp=sharing)
-*   **Deployed Smart Contract ID (Testnet)**:
-    *   `CA43LPCXAPJQZYGKAKYKMIBL7WBOXWFY22ZCVTGTDRULIUHGHWXBXU6N`
+## 🎬 Demo Video (Level 4)
+👉 **[https://www.loom.com/share/d5e1150cf07a4c22b619119d3816367d](https://www.loom.com/share/d5e1150cf07a4c22b619119d3816367d)**
 
 ---
 
-## 🌟 Key Features
+## 🌟 Overview
 
-### 1. Multi-Wallet Integration
-Experience seamless connectivity with the Stellar ecosystem:
-*   **Freighter**: Full integration for wallet connection and Soroban transaction signing.
-*   **Stellar Explorer Integration**: Verify all transactions on-chain in real-time.
-
-### 2. Advanced Smart Contracts (Soroban)
-Our core logic is built with Rust on the Soroban smart contract platform:
-*   **Cryptographic Review Signatures**: Every review is immutably tied to the reviewer's Stellar wallet address.
-*   **On-Chain Storage**: All reviews permanently stored on the Stellar Testnet blockchain.
-*   **Metadata Compression**: Efficient data encoding for storing rich review information.
-
-### 3. Premium User Experience (UX)
-![StarChain Review Interface](./assets/businesses/medicare.png)
-
-*   **Browse Reviews Page**: Seamlessly view all submitted reviews with ratings and wallet verification.
-*   **Submit Review Form**: User-friendly interface to write and publish reviews directly on-chain.
-*   **Wallet Connection Status**: Real-time display of connected Stellar Freighter wallet.
-*   **Optimistic UI & Glassmorphism**: Modern deep-space aesthetics with high contrast.
-*   **Fully Responsive**: Built with modern CSS for flawless experience on desktop, tablet, and mobile.
-*   **Live Rating Display**: Instant feedback showing your review has been recorded.
-
-### 4. Trust & Verification System
-*   **Wallet Address Verification**: Every reviewer's Stellar wallet is publicly visible and verifiable.
-*   **Blockchain Explorer Links**: Direct links to verify transactions on Stellar Expert.
-*   **Immutable Record**: Reviews cannot be edited or deleted once published on-chain.
-*   **Community Trust Score**: Aggregate ratings visible for transparent reputation.
+**Stellar Live Poll** is a decentralized voting DApp built on Stellar blockchain using Soroban smart contracts. Users connect their Stellar wallet and vote for their preferred blockchain for payments. All votes are stored on-chain with real-time updates, donut chart, confetti animation, and transaction history.
 
 ---
 
-## 📂 Project Structure
+# 🟡 Level 2 - Yellow Belt
 
-```text
-starchain-fixed/
-├── public/                 # Static assets (images, logos)
-│   └── assets/
-│       └── businesses/     # Verified business images
-├── src/
-│   ├── components/         # Reusable UI components
-│   ├── hooks/              # Custom React hooks (Store, Wallet)
-│   ├── pages/              # Main view pages
-│   ├── utils/              # Stellar/Soroban SDK logic
-│   └── App.jsx             # Main router and app shell
-├── contracts/              # Soroban Smart Contract (Rust)
-├── ARCHITECTURE.md         # System design documentation
-└── README.md               # Project documentation (Level 5)
+## ✅ Submission Checklist
+
+- ✅ Public GitHub repository
+- ✅ README with setup instructions
+- ✅ Minimum 2+ meaningful commits
+- ✅ Live demo link (Vercel)
+- ✅ Screenshot: wallet options available
+- ✅ Deployed contract address
+- ✅ Transaction hash of a contract call
+
+## ✅ Level 2 Requirements
+
+| Requirement | Status |
+|---|---|
+| Soroban contract deployed on testnet | ✅ Done |
+| Frontend calls contract | ✅ Done |
+| 3+ error types handled | ✅ Done |
+| Transaction status visible | ✅ Done |
+| Multi-wallet support | ✅ Done |
+| Real-time synchronization | ✅ Done |
+| StellarWalletsKit integration | ✅ Done |
+| 2+ meaningful commits | ✅ Done |
+
+## 📋 Contract Details
+
+**Network:** Stellar Testnet
+
+**Poll Contract Address:**
 ```
+CABXIUP6FTYYHZKD7ZCASSMFKKUSXYNCPVKRBNCIXPUEPQ5C3ZWGZYTV
+```
+
+**View on Stellar Expert:**
+https://stellar.expert/explorer/testnet/contract/CABXIUP6FTYYHZKD7ZCASSMFKKUSXYNCPVKRBNCIXPUEPQ5C3ZWGZYTV
+
+**Transaction Hash:**
+```
+61cf6539b19e3d7a3cf9d92873bea7a4a9828e27dab2ea798522af4e6925c370
+```
+
+[View Transaction on Stellar Explorer](https://stellar.expert/explorer/testnet/tx/61cf6539b19e3d7a3cf9d92873bea7a4a9828e27dab2ea798522af4e6925c370)
+
+## 🖼️ Screenshots - Level 2
+
+### 💳 Wallet Options Available
+![Wallet Modal](./wallet-modal.png.png)
+
+### ✅ Transaction Success + Voting UI
+![Transaction Success](./tx-success.png.png)
+
+### ⏳ Transaction Processing
+![Transaction Processing](./tx-process.png.png)
+
+### 🔍 Transaction Hash on Stellar Explorer
+![Transaction hash](./stellar-explorer-contract.png)
+
+## 🔐 Multi-Wallet Support
+- Freighter
+- xBull
+- Lobstr
+- Rabet
+
+## 🛡️ Error Handling
+- Wallet not connected
+- Transaction rejected by user
+- Insufficient XLM balance
+- Wrong network (not Testnet)
+
+## ⚡ Real-time Sync
+- Votes auto-refresh every 10 seconds
+- Live countdown timer
+- On-chain state via Soroban RPC
+
+---
+
+# 🟠 Level 3 - Orange Belt
+
+## ✅ Submission Checklist
+
+- ✅ Public GitHub repository
+- ✅ README with setup instructions
+- ✅ Minimum 3+ meaningful commits
+- ✅ Live demo link (Vercel)
+- ✅ Screenshot: wallet options available
+- ✅ Deployed contract address
+- ✅ Transaction hash of a contract call
+- ✅ Demo video (1 minute)
+- ✅ Test screenshot in README
+
+## ✅ Level 3 Requirements
+
+| Requirement | Status |
+|---|---|
+| Mini-dApp fully functional | ✅ Done |
+| Minimum 3 tests passing | ✅ Done - 5 tests passing |
+| README complete | ✅ Done |
+| Demo video recorded (1 minute) | ✅ Done |
+| Minimum 3+ meaningful commits | ✅ Done - 10+ commits |
+| Public GitHub repository | ✅ Done |
+| Live demo link (Vercel) | ✅ Done |
+| Test screenshot in README | ✅ Done |
+
+## 🧪 Smart Contract Tests - 5 Passing
+
+![Test Output](./test-screenshot.png)
+
+```
+running 5 tests
+test tests::test_get_question ... ok
+test tests::test_init_zero_votes ... ok
+test tests::test_total_votes_correct ... ok
+test tests::test_multiple_votes_same_option ... ok
+test tests::test_vote_increments ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+```
+
+## ✨ Level 3 New Features
+
+- 🍩 Donut chart showing live vote distribution
+- 🔢 Animated vote counter
+- 🎉 Confetti animation on vote success
+- ⏱️ Countdown timer for auto-refresh (10s)
+- 📋 Copy TX hash button
+- 📤 Share results button
+- 🌐 Network status indicator (Online/Offline)
+- 🏆 Live rank system (#1 #2 #3 #4)
+- ✅ Your Vote badge highlight
+- ⏳ Loading spinner on vote button
+- 📜 Transaction history with explorer links
+
+---
+
+# 🟢 Level 4 - Green Belt
+
+## ✅ Submission Checklist
+
+- ✅ Public GitHub repository
+- ✅ README with complete documentation
+- ✅ Minimum 8+ meaningful commits
+- ✅ Live demo link (Vercel)
+- ✅ Screenshot: mobile responsive view
+- ✅ Screenshot: CI/CD pipeline running
+- ✅ Contract addresses and transaction hash (inter-contract calls)
+
+## ✅ Level 4 Requirements
+
+| Requirement | Status |
+|---|---|
+| Inter-contract call working | ✅ Done - PollReward contract |
+| CI/CD running | ✅ Done - GitHub Actions |
+| Mobile responsive | ✅ Done |
+| Minimum 8+ meaningful commits | ✅ Done - 15+ commits |
+| Public GitHub repository | ✅ Done |
+| Live demo link | ✅ Done |
+
+## 🔄 CI/CD Pipeline
+
+![CI/CD Pipeline](./cicd-screenshot.png)
+
+**GitHub Actions** — automatic tests run on every commit:
+- Poll contract tests (5 passing)
+- Reward contract tests (3 passing)
+- Frontend build
+
+## 📱 Mobile Responsive
+
+![Mobile View](./mobile-screenshot.png)
+
+## 🤝 Inter-contract Call - PollReward Contract
+
+**How it works:**
+```
+User votes on Poll Contract
+        ↓
+Vote confirmed on Stellar
+        ↓
+PollReward Contract called automatically
+        ↓
+User receives reward! 🏆
+```
+
+**Poll Contract Address:**
+```
+CABXIUP6FTYYHZKD7ZCASSMFKKUSXYNCPVKRBNCIXPUEPQ5C3ZWGZYTV
+```
+
+**Reward Contract Address:**
+```
+CDO6NXBA2BLY46GRXYZE7RTQJ2Q4HNUJLPJHJWVWLY6GLZ7UZNCTTJDS
+```
+
+**Reward Contract Deploy TX Hash:**
+```
+4578e1c805ab0f4c877ffc6f3a73bd68d5c1bfc1e8aedb54872faf27431bb480
+```
+
+[View on Stellar Expert](https://stellar.expert/explorer/testnet/contract/CDO6NXBA2BLY46GRXYZE7RTQJ2Q4HNUJLPJHJWVWLY6GLZ7UZNCTTJDS)
+
+## ✨ Level 4 New Features
+
+- 🔄 CI/CD GitHub Actions pipeline
+- 📱 Mobile responsive design
+- 🤝 Inter-contract call (PollReward)
+- 🏆 Reward earned badge after voting
+- 📜 Both contract addresses in app
 
 ---
 
 ## 🛠️ Tech Stack
 
-*   **Frontend**: React.js, Vite
-*   **State Management**: Zustand (for wallet connection state)
-*   **Styling**: Vanilla CSS, Glassmorphism effects
-*   **Blockchain Integration**: 
-    *   `@stellar/stellar-sdk` - Stellar network communication
-    *   `@stellar/freighter-api` - Wallet integration
-*   **Smart Contracts**: Rust (Soroban)
-*   **Hosting**: Vercel (Frontend deployment)
-*   **Testnet**: Stellar Testnet
+| Layer | Technology |
+|---|---|
+| Smart Contract | Rust + Soroban SDK |
+| Frontend | React + Vite |
+| Wallets | Freighter, xBull, Lobstr, Rabet |
+| Network | Stellar Testnet |
+| RPC | soroban-testnet.stellar.org |
+| Deployment | Vercel |
+| CI/CD | GitHub Actions |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
-*   Node.js (v18 or higher)
-*   npm or yarn package manager
-*   Stellar Freighter Wallet Extension ([Download here](https://www.freighter.app/))
-*   Freighter wallet set to **Stellar Testnet**
+```bash
+git clone https://github.com/D-23Git/stellar-live-poll.git
+cd stellar-live-poll
+npm install
+npm run dev
+```
 
-### Installation
+Open http://localhost:5173
 
-1.  **Clone the Repository**:
-    ```bash
-    git clone https://github.com/D-23Git/StarChain.git
-    cd StarChain
-    ```
-
-2.  **Install Dependencies**:
-    ```bash
-    npm install
-    ```
-
-3.  **Run Development Server**:
-    ```bash
-    npm run dev
-    ```
-
-4.  **Visit the App**: 
-    Open [http://localhost:5173](http://localhost:5173) in your browser.
+**Requirements:**
+- Node.js 18+
+- Freighter Wallet browser extension
+- Freighter set to Testnet
+- Free test XLM from https://friendbot.stellar.org
 
 ---
 
-## 👥 User Feedback & Onboarding
+## 📁 Project Structure
 
-### ✅ Successfully Onboarded 5+ Real Testnet Users
-
-We conducted comprehensive user testing with **5 real Stellar testnet users** to validate our MVP and gather actionable feedback.
-
-### 📊 Collected User Responses
-
-📊 **[View All User Responses (Google Sheet)](https://docs.google.com/spreadsheets/d/1M7MpJttnzaU8tJJ5diGtT9nnqieeQzlkkgOKn_tpHxk/edit?usp=sharing)**
-
-### 👤 Verified User Feedback Table
-
-| # | User Name | Stellar Wallet Address (Verified) | Rating | Key Feedback |
-|---|-----------|-----------------------------------|--------|--------------|
-| 1 | Harshal Jagdale | `GCATAASNFHODIKA4VTIEZHONZB3BGZJL42FXHHZ3VS6YKX2PCDIJ3LDY` | ⭐⭐⭐⭐⭐ | *"Great Work"* |
-| 2 | Harshada Vikas Bachhav | `GATCVV5LUG2YM6Y7YMN3LHZWRVV3MT34WBL7ZBPCIXKGAYXIQ3WG6SXZ` | ⭐⭐⭐⭐⭐ | *"Good work"* |
-| 3 | Mansi Baban Sandbhor | `GDLLRKGBCPUYRJE3HFYUNI46PQQNA5HPP6QR43FDPZJXNVHEW5QJ5LKV` | ⭐⭐⭐⭐⭐ | *"The functionality works smoothly without major errors"* |
-| 4 | Ved Malkunaik | `GACUAJJ5XYAOHFRNASQU472IEZHMU5G37CLNPGKA7HK55MEFZV6ZJQ45` | ⭐⭐⭐⭐⭐ | *"Good working, and integration of wallet"* |
-| 5 | Pratidnya Agalave | `GCPHAHVI7F4BOL6H6UIC3PBBESUN3PE7D3QVJLAMFLJBJDJMMX23JWYP` | ⭐⭐⭐⭐⭐ | *"The project can be improved by adding more advanced features"* |
-
-**Overall User Sentiment:** ✅ **Highly Positive** — Users appreciate the secure review verification, intuitive UI, and seamless Freighter wallet integration. All ratings averaged 5/5 stars.
-
----
-
-## 🔮 Future Improvement Plan
-
-### ✅ Current MVP Features
-- ✅ Review submission and storage on Soroban
-- ✅ Freighter wallet integration
-- ✅ Browse all reviews functionality
-- ✅ Real-time blockchain verification
-- ✅ Responsive UI design
-
-### 🎯 Planned Improvements (Next Iteration)
-
-#### ⚡ 1. Performance Optimization
-- Implement off-chain indexing database for instant Browse page loading
-- Add skeleton loaders for better perceived performance
-- Cache recent reviews locally
-
-#### 🪙 2. Advanced Tokenomics
-- Deploy real SRT (StarChain Reward Token) as a Stellar Custom Asset
-- Implement gas sponsoring for new users (no XLM required)
-
-#### 📊 3. Enhanced Dashboard Analytics
-- Expand dashboard with review history charts
-- Implement fake account detection algorithm
+```
+stellar-live-poll/
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+├── contract/
+│   └── src/lib.rs
+├── reward-contract/
+│   └── src/lib.rs
+├── src/
+│   ├── blockchain/
+│   │   └── contract.js
+│   ├── components/
+│   │   ├── PollSection.jsx
+│   │   └── WalletSection.jsx
+│   ├── App.jsx
+│   └── App.css
+└── README.md
+```
 
 ---
 
-## 📋 How to Use StarChain
-
-### Step 1: Connect Wallet
-1. Install [Freighter Wallet Extension](https://www.freighter.app/)
-2. Set your wallet to **Stellar Testnet**
-3. Click "Connect Freighter" on the app
-4. Approve the connection in the extension popup
-
-### Step 2: Submit a Review
-1. Go to "Submit Review" page
-2. Enter review details (title, description, rating)
-3. Click "Submit to Blockchain"
-4. Approve the Soroban transaction in Freighter
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## 👨💻 Author
-
-**Dnyaneshwari Badhe** 
-- GitHub: [https://github.com/D-23Git](https://github.com/D-23Git)
-
----
-
-*Developed for the Stellar Level 5 Milestone - Building the decentralized trust layer.*
+🌟 Built with love on Stellar
+🟡 Yellow Belt (Level 2) + 🟠 Orange Belt (Level 3) + 🟢 Green Belt (Level 4)
